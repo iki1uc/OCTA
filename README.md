@@ -1,41 +1,92 @@
-# OCTA – NC/iki1uc 9×9 Launcher (81 Felder)
+# OCTA · NC/tmp‑Achsen‑Importer · 9×9 · 81‑Matrix
 
-OCTA ist der zentrale Launcher für alle RESPO‑Module.
-Dieses Repository verbindet die NC‑Matrix (9×9 = 81 Felder)
-mit allen verfügbaren RESPO‑Repos.
+OCTA ist ein 9×9‑Matrix‑Launcher, der alle Achsen (tmp‑Files) aus dem
+NC/tmp‑Pool automatisch erkennt, kopiert und in die eigene Struktur einbindet.
 
+Damit wird OCTA zu einem selbstversorgenden NC‑Modul:
+Es lädt alle relevanten tmp‑Achsen ohne manuelle Arbeit.
+
+──────────────────────────────────────────────
 ## 🔹 Zweck
 
-- Alle RESPO‑Repos direkt anwählbar
-- 9×9 OCTA‑Matrix als Startpunkt
-- REAL.json als Haupt‑Routing
-- index.html als grafischer Launcher
+- Alle NC/tmp‑Achsen automatisch übernehmen
+- Alle tmp‑Parameter (DE/TR/EN, X, Q, C, room‑Achsen) einlesen
+- WHIRL.json, REAL.json, Quadrant.json automatisch füttern
+- 9×9 OCTA‑Matrix vollständig befüllen
+- 81 Felder automatisch generieren
+- Keine manuelle Pflege notwendig
 
-## 🔹 RESPO‑Module (automatisch eingebunden)
+──────────────────────────────────────────────
+## 🔹 Import‑Quelle (NC/tmp Pool)
 
-- RESPOx
-- RESPO_ARG_SCAN
-- RESPO_UI_STATUS
-- RESPO-MULTI-NORM
-- RESPO-Code-Pipeline
-- RESPO
-- RESPO-Beam-Point
-- RESPO.Ort-LAGE
-- RESPO-Station
-- RESPO-Name
-- RESPO_MODUL_LOOP
-- respo-scan-hub.app
-- RESPO_CORE_ROUTER
-- Respo-Rotation
-- respo-ghost-bridge.cloud
-- RESPO_MOTION_PRIME
-- RESPO_POSITION_USER
+OCTA importiert folgende Achsen aus dem NC/tmp‑Pool:
 
-## 🔹 Dateien
+- `lang.DE.json`
+- `lang.EN.json`
+- `lang.TR.json`
+- `mode.X.json`
+- `user.Q.json`
+- `value.C.json`
+- `CR.json`
+- `X.room.IN.json`
+- `X.room.CORE.json`
+- `X.room.OUT.json`
 
-- `index.html` – grafischer RESPO‑Launcher
-- `REAL.json` – 81‑Matrix Routing
-- `octa.json` – OCTA‑Definition
-- `octa2.json` – alternative OCTA‑Definition
-- `quadrant.json` – Quadranten‑Routing
-- `whirl.json` – Whirl‑Routing
+Alle Dateien werden automatisch erkannt und übernommen.
+
+──────────────────────────────────────────────
+## 🔹 Auto‑Copy Mechanismus
+
+Beim Start liest OCTA:
+
+1. den Ordner `NC/tmp/`
+2. alle `.json`‑Achsen
+3. kopiert sie in den eigenen Achsen‑Pool
+4. aktualisiert WHIRL.json (81 Felder)
+5. aktualisiert REAL.json (Routing)
+6. aktualisiert Quadrant.json (4× Quadranten)
+7. aktualisiert OCTA.json (9×9 Matrix)
+
+──────────────────────────────────────────────
+## 🔹 WHIRL‑Integration
+
+WHIRL.json wird automatisch mit allen tmp‑Achsen gefüllt:
+
+- 81 Felder
+- jede Achse wird mehrfach zyklisch eingebunden
+- vollständige Rotation
+- vollständige RESPO‑Kompatibilität
+
+──────────────────────────────────────────────
+## 🔹 REAL‑Integration
+
+REAL.json erzeugt:
+
+- 9×9 Routing‑Matrix
+- direkte Achsen‑Verbindung
+- automatische RESPO‑Zuweisung
+
+──────────────────────────────────────────────
+## 🔹 Quadrant‑Integration
+
+Quadrant.json erzeugt:
+
+- 4 Quadranten
+- jede Achse wird einem Quadranten zugeordnet
+- NC‑Drift‑Kompatibilität
+
+──────────────────────────────────────────────
+## 🔹 Dateien in diesem Repository
+
+- `index.html` – OCTA‑Launcher
+- `WHIRL.json` – 81‑Felder‑Rotation
+- `REAL.json` – Routing‑Matrix
+- `OCTA.json` – 9×9 Matrix
+- `Quadrant.json` – Quadranten‑Routing
+- `README.md` – diese Dokumentation
+
+──────────────────────────────────────────────
+## 🔹 Startpunkt
+
+OCTA kann direkt über `index.html` gestartet werden.
+Alle tmp‑Achsen werden automatisch geladen.
