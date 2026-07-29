@@ -8,6 +8,7 @@
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
 h1 { color:#6cf; text-align:center; }
 
+/* GEO-KREIS */
 #geo {
     width: 360px;
     height: 360px;
@@ -15,22 +16,39 @@ h1 { color:#6cf; text-align:center; }
     border: 3px solid #6cf;
     border-radius: 50%;
     position: relative;
-    animation: spin 14s linear infinite;
+    animation: spin 18s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    box-shadow: 0 0 25px #6cf;
 }
 
+/* DOTS */
 .dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background:#0f0;
     border-radius:50%;
     position:absolute;
+    transition:0.3s;
+    box-shadow:0 0 10px #0f0;
 }
 
+/* ACHSEN */
+.axis {
+    position:absolute;
+    width:2px;
+    height:360px;
+    background:#333;
+    left:179px;
+    top:0;
+    transform-origin:bottom;
+}
+
+/* INFO PANEL */
 pre {
     background:#111;
     padding:20px;
     border-left:3px solid #6cf;
     white-space:pre-wrap;
+    box-shadow:0 0 15px #6cf;
 }
 </style>
 </head>
@@ -58,21 +76,35 @@ pre {
             "Geo: " + whirl.geo + "\n" +
             "Module: " + whirl.routes.length + "\n";
 
-        // Geometrie erzeugen
         const geo = document.getElementById("geo");
         const count = whirl.fields;
         const radius = 160;
 
+        /* OCTA-ACHSEN (8 Achsen) */
+        for(let a=0; a<8; a++){
+            const axis = document.createElement("div");
+            axis.className = "axis";
+            axis.style.transform = `rotate(${a * 45}deg)`;
+            geo.appendChild(axis);
+        }
+
+        /* DOTS ERZEUGEN */
         for(let i=0; i<count; i++){
             const dot = document.createElement("div");
             dot.className = "dot";
 
             const angle = (i / count) * Math.PI * 2;
-            const x = Math.cos(angle) * radius + 180 - 5;
-            const y = Math.sin(angle) * radius + 180 - 5;
+            const x = Math.cos(angle) * radius + 180 - 6;
+            const y = Math.sin(angle) * radius + 180 - 6;
 
             dot.style.left = x + "px";
             dot.style.top = y + "px";
+
+            /* WHIRL-ENERGIE → DOT-Farbe */
+            const energy = whirl.vector[i % whirl.vector.length];
+            const hue = (energy * 36) % 360;
+            dot.style.background = `hsl(${hue}, 100%, 50%)`;
+            dot.style.boxShadow = `0 0 12px hsl(${hue}, 100%, 50%)`;
 
             geo.appendChild(dot);
         }
